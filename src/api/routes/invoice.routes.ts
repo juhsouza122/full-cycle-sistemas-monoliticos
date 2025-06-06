@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { InvoiceFacadeInterface } from '../../facade/invoice.facade';
 
-export default function invoiceRoutes(facade: InvoiceFacadeInterface) {
+export function invoiceRoutes(facade: InvoiceFacadeInterface) {
   const router = Router();
 
   router.get('/:id', async (req, res) => {
