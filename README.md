@@ -92,5 +92,5 @@ A mesma instância do repositório é compartilhada entre as rotas, garantindo c
 A estrutura está preparada para expansão com banco de dados real e outros módulos do monolito
 👩‍💻 Autora
 
-Juliana Souza
+Julia Souza
 🚀 Desafio Full Cycle - Sistema Monolítico
