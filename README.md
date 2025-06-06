@@ -1,100 +1,96 @@
-🧾 Módulo de Invoice (Nota Fiscal)
+# 🧾 Full Cycle Monolito - Invoice Module
 
-Este módulo implementa o domínio de geração e consulta de notas fiscais no padrão DDD conforme o desafio da FullCycle.
+Este projeto implementa o módulo de **Nota Fiscal (Invoice)** como parte do desafio da Full Cycle. Ele segue os princípios de arquitetura limpa, possui uma API REST em TypeScript e testes end-to-end utilizando `jest` e `supertest`.
 
-🏗️ Estrutura
+---
+
+## 🧱 Funcionalidades
+
+- ✅ Geração de Invoice (`/checkout`)
+- ✅ Consulta de Invoice por ID (`/invoice/:id`)
+- ✅ Cadastro mockado de `products` e `clients`
+- ✅ Testes e2e com cobertura acima de 90%
+
+---
+
+## 🚀 Tecnologias
+
+- TypeScript
+- Node.js
+- Express
+- Jest
+- Supertest
+
+---
+
+## 📂 Estrutura do Projeto
+
 src/
-├── domain/
-│   ├── entity/
-│   ├── value-object/
-│   └── repository/
-├── usecase/
-│   ├── generate-invoice/
-│   └── find-invoice/
-├── facade/
-├── factory/
-└── infra/
-    └── db/
-        └── invoice-repository.memory.ts
-tests/
+├── api/ # Camada de rotas e servidor Express
+│ ├── routes/
+│ └── server.ts
+├── config/ # Facade e repositório compartilhado
+├── domain/ # Entidades e Value Objects
+├── facade/ # Padrão Facade
+├── factory/ # Factory de fachada
+├── infra/db/ # Repositório em memória
+├── usecase/ # Casos de uso
+└── tests/ # Testes e2e e unitários
 
-📦 Entidades
 
-**Invoice**
-* id: string
-* name: string
-* document: string
-* address: Address (Value Object)
-* items: InvoiceItem[]
-* createdAt: Date
-* updatedAt: Date
+---
 
-**InvoiceItem**
-* id: string
-* name: string
-* price: number
+## 📦 Instalação
 
-**Address (VO)**
-* street, number, complement, city, state, zipCode
+```bash
+# Clone o repositório
+git clone https://github.com/juhsouza122/full-cycle-sistemas-monoliticos.git
+cd full-cycle-sistemas-monoliticos
 
-🧠 Use Cases
-**GenerateInvoiceUseCase**
-* Recebe dados do cliente e produtos
-* Retorna nota fiscal com total calculado
-
-**FindInvoiceUseCase**
-* Busca uma nota fiscal pelo id
-
-🎯 DTOs
-**Entrada - Generate**
-
-interface GenerateInvoiceUseCaseInputDto {
-  name: string;
-  document: string;
-  street: string;
-  number: string;
-  complement: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  items: { id: string; name: string; price: number }[];
-}
-
-**Saída - Generate**
-
-interface GenerateInvoiceUseCaseOutputDto {
-  id: string;
-  name: string;
-  document: string;
-  street: string;
-  number: string;
-  complement: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  items: { id: string; name: string; price: number }[];
-  total: number;
-}
-
-🧪 Testes
-**Executar:**
-npm test
-
-**Testa os fluxos:**
-* Gerar invoice com múltiplos produtos
-* Buscar invoice e validar total, dados do cliente e endereço
-
-🧰 Facade
-A InvoiceFacade centraliza o uso dos casos de uso (generate e find) com uma interface simples.
-
-const facade = InvoiceFacadeFactory.create();
-
-const result = await facade.generate(input);
-const invoice = await facade.find({ id: result.id });
-
-🚀 Executar localmente
-1. Instale dependências:
+# Instale as dependências
 npm install
 
-2. Rode os testes:
+
+🧪 Rodar os Testes
 npm test
+
+Você verá algo como:
+PASS  src/tests/e2e/invoice.e2e.spec.ts
+  ✓ should return 404 for non-existent invoice
+  ✓ should create and retrieve an invoice
+
+
+🔗 Endpoints da API
+
+🔹 Criar Produto (mock)
+POST /products
+🔹 Criar Cliente (mock)
+POST /clients
+🔹 Criar Invoice
+POST /checkout
+
+{
+  "name": "Cliente Teste",
+  "document": "99999999999",
+  "street": "Rua XPTO",
+  "number": "123",
+  "complement": "Apto 2",
+  "city": "SP",
+  "state": "SP",
+  "zipCode": "00000-000",
+  "items": [
+    { "id": "1", "name": "Produto A", "price": 100 },
+    { "id": "2", "name": "Produto B", "price": 200 }
+  ]
+}
+🔹 Buscar Invoice por ID
+GET /invoice/:id
+🧠 Observações
+
+O repositório de Invoice está implementado em memória
+A mesma instância do repositório é compartilhada entre as rotas, garantindo consistência
+A estrutura está preparada para expansão com banco de dados real e outros módulos do monolito
+👩‍💻 Autora
+
+Juliana Souza
+🚀 Desafio Full Cycle - Sistema Monolítico
