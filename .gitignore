@@ -47,3 +47,6 @@ package-lock.json
 # Temp
 tmp/
 temp/
+
+# Node modules
+node_modules/
